@@ -148,7 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
         var currentFrameTime = new Date().getTime() - startTime;
         while (tape.length && currentFrameTime >= tape[0].time) {
           var head = tape.shift();
+          var scrollDown = displayNode.scrollTop + displayNode.offsetHeight - 1 === displayNode.scrollHeight;
           displayNode.value = head.content;
+          if (scrollDown) {
+            displayNode.scrollTop = displayNode.scrollHeight - displayNode.offsetHeight + 1;
+          }
         }
         if (tape.length) {
           window.requestAnimationFrame(read);
