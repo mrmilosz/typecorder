@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var id = state;
 
       if (id) {
+        showSection('loading');
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4) {

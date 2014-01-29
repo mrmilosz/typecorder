@@ -3,8 +3,11 @@ block scripts
   script(type='text/javascript', src='/static/js/views/index.js')
 
 block content
+  .loading.section
+    h2.heading Preparing typecording.
+
   .playback.section
-    h2.heading.title Untitled recording
+    h2.heading.title
     textarea.display(readonly)
     button.play Play
     button.home Home
