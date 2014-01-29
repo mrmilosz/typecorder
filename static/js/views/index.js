@@ -88,17 +88,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Recording
   var tape = [];
   var baseTime = null;
+  var previousValue = '';
 
   recordingInputNode.addEventListener('keydown', setTimeout.bind(window, updateTape.bind(recordingInputNode)));
 
   function updateTape() {
-    if (baseTime === null) {
-      baseTime = new Date().getTime();
+    if (this.value !== previousValue) {
+      if (baseTime === null) {
+        baseTime = new Date().getTime();
+      }
+      tape.push({
+        time: new Date().getTime() - baseTime,
+        content: this.value
+      });
+      previousValue = this.value;
     }
-    tape.push({
-      time: new Date().getTime() - baseTime,
-      content: this.value
-    });
   }
 
   recordingSectionNode.addEventListener('submit', function(event) {
@@ -130,8 +134,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function resetRecording() {
-    title: recordingInputNode.value = '';
-    title: titleInputNode.value = '';
+    recordingInputNode.value = '';
+    titleInputNode.value = '';
+    previousValue = '';
     tape = [];
     baseTime = null;
   }
