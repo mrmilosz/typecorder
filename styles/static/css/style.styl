@@ -1,0 +1,74 @@
+@import 'nib'
+@import 'nib/gradients'
+
+global-reset()
+
+*,*::before,*::after
+  box-sizing  border-box
+
+h1
+  font-size 50px
+
+h2
+  font-size 20px
+
+.error
+  color red
+
+.message
+  color green
+
+.wide
+  letter-spacing 0.5em
+
+.faint
+  opacity 0.2
+
+body
+  font-family 'Arial', sans-serif
+
+  .header
+    background-color grey
+    color            white
+
+    .title
+      padding 4px 0
+      cursor  pointer
+
+    .title a
+      text-decoration none
+      color           inherit
+
+  .content
+    width 800px
+    margin 0 auto
+
+    .section
+      display none
+
+      &.visible
+        display block
+
+    .heading
+      margin         20px 0 10px
+      border-bottom  1px solid black
+
+    textarea, input[type="text"]
+      font          14px monospace
+      width         100%
+      padding       10px
+      margin        10px 0
+      border        none
+      border-bottom 1px solid black
+      outline       none
+
+      &:focus
+        box-shadow   0 0 5px grey
+        border-color transparent
+
+    textarea
+      height 200px
+      resize        vertical
+
+    button, input[type="submit"]
+      margin 10px 10px 10px 0

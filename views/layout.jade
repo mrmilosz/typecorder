@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    block title
+      title Typecorder
+
+    link(rel='stylesheet', href='/static/css/style.css')
+    link(rel='shortcut icon', href='/static/favicon.ico')
+    block styles
+
+    script(type='text/javascript', src='/static/js/es5-sham.min.js')
+    block scripts
+  body
+    .header
+      .content
+        h1.title Typecorder
+    .content
+      block content
