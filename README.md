@@ -1,8 +1,7 @@
-# LOLFarm
+# Typecorder
 
 ## System dependencies
 nodejs
-sqlite3
 
 ## NPM dependencies
 express

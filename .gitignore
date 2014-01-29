@@ -3,14 +3,8 @@
 .*.swo
 *~
 
-# SQLite databases
-*.db
-
 # Node modules
 node_modules
-
-# Configuration files
-.exrc
 
 # Compiled files (this list might grow)
 static/css/*.css
