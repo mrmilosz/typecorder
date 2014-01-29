@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }));
 
     resetRecording();
+    showSection('loading');
   });
 
   function resetRecording() {
