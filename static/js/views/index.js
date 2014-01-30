@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     homeButtonNode = playbackSectionNode.querySelector('.home'),
     progressNode = playbackSectionNode.querySelector('.progress'),
     progressBarNode = playbackSectionNode.querySelector('.progress .bar'),
+    tweetButtonNode = playbackSectionNode.querySelector('.tweet'),
 
     recordingSectionNode = document.querySelector('.recording.section'),
     recordingInputNode = recordingSectionNode.querySelector('[name="recording"]'),
@@ -189,4 +190,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   playButtonNode.addEventListener('click', playTape);
+
+  tweetButtonNode.addEventListener('click', function() {
+    window.location = 'https://twitter.com/intent/tweet?' + ([
+      [    'text', 'Typecorder — share replays of what you type'] ,
+//    ['hashtags', 'typecorder'                                 ] ,
+      [     'url', window.location.href                         ]
+    ]).map(function(item) {
+      return encodeURIComponent(item[0]) + '=' + encodeURIComponent(item[1]);
+    }).join('&');
+  });
 });
