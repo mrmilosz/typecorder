@@ -95,24 +95,33 @@ app.get('/:key?', function(request, response, next) {
     response.render('index');
   }
   else if (request.mediaType === 'application/json') {
-    Recording.findById(keyToObjectId(request.param('key')), function(error, recording) {
-      var payload = {};
-      if (error) {
-        response.status(500);
-        payload['error'] = error;
-      }
-      else if (!recording) {
-        response.status(404);
-        payload['error'] = 'No recording has this ID';
-      }
-      else {
-        response.status(200);
-        payload['result'] = {
-          recording: recording
-        };
-      }
-      response.json(payload);
-    });
+    var objectId = keyToObjectId(request.param('key'));
+    if (objectId) {
+      Recording.findById(objectId, function(error, recording) {
+        var payload = {};
+        if (error) {
+          response.status(500);
+          payload['error'] = error;
+        }
+        else if (!recording) {
+          response.status(404);
+          payload['error'] = 'No recording has this ID';
+        }
+        else {
+          response.status(200);
+          payload['result'] = {
+            recording: recording
+          };
+        }
+        response.json(payload);
+      });
+    }
+    else {
+      response.status(404);
+      response.json({
+        'error': 'No recording has this ID'
+      });
+    }
   }
   else {
     next();
@@ -155,11 +164,27 @@ function mediaType(request, response, next) {
  */
 
 function objectIdToKey(objectId) {
-  return new Buffer(objectId, 'hex').toString('base64').replace('+', '-').replace('/', '_');
+  if (objectId.length != 24) {
+    return false;
+  }
+  try {
+    return new Buffer(objectId, 'hex').toString('base64').replace('+', '-').replace('/', '_');
+  }
+  catch (e) {
+    return false;
+  }
 }
 
 function keyToObjectId(key) {
-  return new Buffer(key.replace('-', '+').replace('_', '/'), 'base64').toString('hex');
+  if (key.length != 16) {
+    return false;
+  }
+  try {
+    return new Buffer(key.replace('-', '+').replace('_', '/'), 'base64').toString('hex');
+  }
+  catch (e) {
+    return false;
+  }
 }
 
 /*
