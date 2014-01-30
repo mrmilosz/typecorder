@@ -193,8 +193,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   tweetButtonNode.addEventListener('click', function() {
     window.location = 'https://twitter.com/intent/tweet?' + ([
-      [    'text', 'Typecorder — share replays of what you type'] ,
-//    ['hashtags', 'typecorder'                                 ] ,
+      [    'text', 'Typecorder — share replays of what you type'],
+      ['hashtags', 'typecorder'                                 ],
       [     'url', window.location.href                         ]
     ]).map(function(item) {
       return encodeURIComponent(item[0]) + '=' + encodeURIComponent(item[1]);
