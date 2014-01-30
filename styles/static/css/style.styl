@@ -1,9 +1,33 @@
 @import 'nib'
 @import 'nib/gradients'
 
-@import url("http://fonts.googleapis.com/css?family=Abril\+Fatface")
+@import url(http://fonts.googleapis.com/css?family=Abril\+Fatface)
 
 global-reset()
+
+// https://github.com/mozilla/kuma/blob/master/media/redesign/stylus/mixins.styl
+set-placeholder-style(prop, value)
+  &::-webkit-input-placeholder
+    {prop} value
+  &::-moz-input-placeholder
+    {prop} value
+  &::input-placeholder
+    {prop} value
+
+header-background-color = rgb(28, 100, 128)
+header-font-color = white
+
+body-background-color = white
+body-font-color = #010204
+body-input-font = 14px monospace
+body-input-font-color = black
+body-input-placeholder-font-color = lightgray
+body-error-font-color = red
+
+textarea-height = 200px
+
+shadow-color = grey
+
 
 *,*::before,*::after
   box-sizing  border-box
@@ -18,35 +42,24 @@ h3
   font-size 20px
 
 .error
-  color red
-
-.message
-  color green
-
-.wide
-  letter-spacing 0.5em
-
-.faint
-  opacity 0.2
+  color body-error-font-color
 
 body
-  font-family 'Arial', sans-serif
+  background-color body-background-color
+  font             14px 'Arial', sans-serif
+  color            body-font-color
 
   .header
-    background-color grey
-    color            white
-
-    .title
-      font-family 'Abril Fatface', cursive;
-      padding     4px 0 14px
+    background-color header-background-color
+    color            header-font-color
+    font-family      'Abril Fatface', cursive
 
     .title a
       text-decoration none
       color           inherit
 
     .tagline
-      font-family 'Abril Fatface', cursive;
-      absolute top 19px right 0
+      absolute bottom 8px right 0
 
   .content
     width    800px
@@ -61,28 +74,32 @@ body
 
     .heading
       margin         20px 0 10px
-      border-bottom  1px solid black
+      border-bottom  1px solid body-font-color
 
     textarea, input[type="text"]
       display       block
-      font          14px monospace
+      font          body input font
+      color         body-input-font-color
       width         100%
       padding       10px
       margin        10px 0
       border        none
-      border-bottom 1px solid black
+      border-bottom 1px solid body-font-color
       outline       none
 
       &:focus
-        box-shadow   0 0 5px grey
+        box-shadow   0 0 5px shadow-color
         border-color transparent
 
+      set-placeholder-style(color, body-input-placeholder-font-color)
+      set-placeholder-style(font, body-input-font)
+
     textarea
-      height 200px
-      resize        vertical
+      height textarea-height
+      resize vertical
 
       &.display
-        height        199px
+        height        textarea-height - 1px
         border        none
         margin-bottom 0
 
@@ -91,14 +108,14 @@ body
 
     .progress
        height           1px
-       background-color black
+       background-color body-font-color
        margin-bottom    10px
        overflow         hidden
        position         relative
 
       .bar
         box-sizing       content-box
-        background-color white
+        background-color body-background-color
         width            10px
         height           100%
         absolute         left
