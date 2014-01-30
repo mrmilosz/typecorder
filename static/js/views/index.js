@@ -169,12 +169,12 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBarNode.style.left = parseInt(progressNode.clientWidth * currentFrameTime / totalTapeTime) + 'px';
         while (tape.length && currentFrameTime >= tape[0].time) {
           var head = tape.shift(),
-            scrollDown = displayNode.scrollTop + displayNode.offsetHeight - 1 === displayNode.scrollHeight,
+            scrollDown = displayNode.scrollTop + displayNode.offsetHeight === displayNode.scrollHeight,
             patchList = dmp.patch_fromText(head.patch),
             patchedText = dmp.patch_apply(patchList, displayNode.value)[0];
           displayNode.value = patchedText;
           if (scrollDown) {
-            displayNode.scrollTop = displayNode.scrollHeight - displayNode.offsetHeight + 1;
+            displayNode.scrollTop = displayNode.scrollHeight - displayNode.offsetHeight;
           }
         }
         if (tape.length) {
