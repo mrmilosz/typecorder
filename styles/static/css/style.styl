@@ -56,6 +56,7 @@ body
       border-bottom  1px solid black
 
     textarea, input[type="text"]
+      display       block
       font          14px monospace
       width         100%
       padding       10px
@@ -71,6 +72,28 @@ body
     textarea
       height 200px
       resize        vertical
+
+      &.display
+        height        199px
+        border        none
+        margin-bottom 0
+
+        &:focus
+          box-shadow    inherit
+
+    .progress
+       height           1px
+       background-color black
+       margin-bottom    10px
+       overflow         hidden
+       position         relative
+
+      .bar
+        box-sizing       content-box
+        background-color white
+        width            10px
+        height           100%
+        absolute         left
 
     button, input[type="submit"]
       margin 10px 10px 10px 0

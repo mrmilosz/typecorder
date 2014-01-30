@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     displayNode = playbackSectionNode.querySelector('.display'),
     playButtonNode = playbackSectionNode.querySelector('.play'),
     homeButtonNode = playbackSectionNode.querySelector('.home'),
+    progressNode = playbackSectionNode.querySelector('.progress'),
+    progressBarNode = playbackSectionNode.querySelector('.progress .bar'),
 
     recordingSectionNode = document.querySelector('.recording.section'),
     recordingInputNode = recordingSectionNode.querySelector('[name="recording"]'),
@@ -164,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function read() {
       if (currentPlaybackId === playbackId) {
         var currentFrameTime = new Date().getTime() - startTime;
+        progressBarNode.style.left = parseInt(progressNode.clientWidth * currentFrameTime / totalTapeTime) + 'px';
         while (tape.length && currentFrameTime >= tape[0].time) {
           var head = tape.shift(),
             scrollDown = displayNode.scrollTop + displayNode.offsetHeight - 1 === displayNode.scrollHeight,
@@ -180,7 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    var startTime = new Date().getTime();
+    var startTime = new Date().getTime(),
+      totalTapeTime = tape[tape.length - 1].time;
     read();
   }
 
