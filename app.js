@@ -31,7 +31,7 @@ var opts = optimist.argv;
 mongoose.connect('mongodb://localhost/typecorder');
 var Recording = mongoose.model('Recording', new Schema({
   title: String,
-  data: [{ time: Number, content: String }]
+  data: [{ time: Number, patch: String }]
 }));
 
 /*
@@ -51,9 +51,9 @@ app.use(express.logger());                                   // Log requests
 
 app.use(express.compress());                                 // Set up all responses to be compressed
 
-app.use(mediaType);                                          // Custom request method: mediaType
+app.use(mediaType);                                          // Custom request member: mediaType
 
-app.use(express.bodyParser());                               // Read POST bodies into request.body
+app.use(express.json());                                     // Read JSON POST bodies into request.body
 
 app.use(app.router);                                         // First try to match routes
 app.use(stylus.middleware({                                  // Compile styles; about to enter static

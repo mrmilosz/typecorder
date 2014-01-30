@@ -2,6 +2,7 @@
 
 ## System dependencies
 nodejs
+mongodb
 
 ## NPM dependencies
 express

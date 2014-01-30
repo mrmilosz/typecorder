@@ -1,6 +1,8 @@
 extend layout
 block scripts
   script(type='text/javascript', src='/static/js/views/index.js')
+  // https://code.google.com/p/google-diff-match-patch/ 
+  script(type='text/javascript', src='/static/js/diff_match_patch.js')
 
 block content
   .loading.section
@@ -13,8 +15,8 @@ block content
     button.home Home
 
   form.recording.section(action='/', method='POST')
-    h2.heading Please type something in the box and press save
+    h2.heading Please type something in the box and press 'Publish'
     textarea(name='recording', placeholder='Recording')
     input(type='text', name='title', placeholder='Optional title')
-    input(type='submit', value='Save')
+    input(type='submit', value='Publish')
     button.reset Reset
