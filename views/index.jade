@@ -6,10 +6,10 @@ block scripts
 
 block content
   .loading.section
-    h2.heading Preparing typecording.
+    h3.heading Preparing typecording.
 
   .playback.section
-    h2.heading.title
+    h3.heading.title
     textarea.display(readonly)
     .progress
       .bar
@@ -17,7 +17,7 @@ block content
     button.home Home
 
   form.recording.section(action='/', method='POST')
-    h2.heading Please type something in the box and press 'Publish'
+    h3.heading Please type something in the box and press 'Publish'
     textarea(name='recording', placeholder='Recording')
     input(type='text', name='title', placeholder='Optional title')
     input(type='submit', value='Publish')
