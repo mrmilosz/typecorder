@@ -95,7 +95,7 @@ app.get('/:key?', function(request, response, next) {
     response.render('index');
   }
   else if (request.mediaType === 'application/json') {
-    recording: Recording.findById(request.param('key'), function(error, recording) {
+    Recording.findById(keyToObjectId(request.param('key')), function(error, recording) {
       var payload = {};
       if (error) {
         response.status(500);
@@ -130,7 +130,7 @@ app.post('/', function(request, response, next) {
       else {
         response.status(200);
         payload['result'] = {
-          id: recording._id
+          id: objectIdToKey(recording._id.toString())
         };
       }
       response.json(payload);
@@ -148,6 +148,18 @@ app.post('/', function(request, response, next) {
 function mediaType(request, response, next) {
   request.mediaType = new Negotiator(request).mediaType(['text/html', 'application/json']);
   next();
+}
+
+/*
+ * Helpers
+ */
+
+function objectIdToKey(objectId) {
+  return new Buffer(objectId, 'hex').toString('base64').replace('+', '-').replace('/', '_');
+}
+
+function keyToObjectId(key) {
+  return new Buffer(key.replace('-', '+').replace('_', '/'), 'base64').toString('hex');
 }
 
 /*
