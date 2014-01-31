@@ -4,25 +4,12 @@ var express    = require('express'      )
   , http       = require('http'         )
   , stylus     = require('stylus'       )
   , nib        = require('nib'          )
-  , optimist   = require('optimist'     )(process.argv.slice(2)) // Bug in optimist; can't use global instance
   , mongoose   = require('mongoose'     )
   ;
 
 var Schema     = mongoose.Schema
   , Negotiator = require('negotiator')
   ;
-
-optimist.usage('Run an instance of the web app.\nUsage: $0')
-  .demand(  'p')
-  .alias(   'p', 'port')
-  .describe('p', 'The port on which to run the web app')
-
-  .boolean( 'd')
-  .alias(   'd', 'dev')
-  .describe('d', 'Turn on developer mode (logging, no compression)')
-  ;
-
-var opts = optimist.argv;
 
 /*
  * Database
@@ -191,4 +178,4 @@ function keyToObjectId(key) {
  * HTTP server
  */
 
-var server = http.createServer(app).listen(opts.port);
+var server = http.createServer(app).listen(process.env.PORT);

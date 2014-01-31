@@ -11,7 +11,6 @@ Send a message to your friends — and let them see you type it.
 * nib
 * mongoose
 * stylus
-* optimist
 * negotiator
 
 ## License
