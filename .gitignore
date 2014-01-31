@@ -14,3 +14,6 @@ error.log
 
 # Startup scripts
 start.sh
+
+# Analytics files
+static/js/analytics.js
