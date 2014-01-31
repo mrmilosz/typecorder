@@ -60,8 +60,22 @@ body
       text-decoration none
       color           inherit
 
+    a.github
+      display          block
+      width            32px
+      height           32px
+      background-image url('/static/images/github.png')
+      opacity          0.15
+      absolute         bottom 11px left 430px
+
+      &:hover
+        opacity 0.25
+
+      &:active
+        opacity 0.35
+
     .tagline
-      absolute bottom 20px right 0
+      absolute bottom 10px right 0
 
   .content
     width    800px
