@@ -18,28 +18,20 @@ header-background-color = rgb(28, 100, 128)
 header-font-color = white
 
 body-background-color = white
-body-font-color = #010204
+body-font-color = #666666
 body-input-font = 14px monospace
 body-input-font-color = black
 body-input-placeholder-font-color = lightgray
 body-error-font-color = red
 
 textarea-height = 200px
-
+border-width = 2px
+border-color = #888888
 shadow-color = grey
 
 
 *,*::before,*::after
   box-sizing  border-box
-
-h1
-  font-size 50px
-
-h2
-  font-size 20px
-
-h3
-  font-size 20px
 
 .error
   color body-error-font-color
@@ -54,7 +46,11 @@ body
     color            header-font-color
 
     .title
+      font-size 50px
       font-family 'Abril Fatface', cursive
+
+      @media screen and (max-width: 350px)
+        font-size 40px
 
     .title a
       text-decoration none
@@ -66,7 +62,14 @@ body
       height           32px
       background-image url('/static/images/github.png')
       opacity          0.15
-      absolute         bottom 11px left 430px
+      absolute         bottom 11px left 60%
+
+      @media screen and (max-width: 550px)
+        left  auto
+        right 0
+
+      @media screen and (max-width: 350px)
+        display none
 
       &:hover
         opacity 0.25
@@ -75,12 +78,16 @@ body
         opacity 0.35
 
     .tagline
-      absolute bottom 10px right 0
+      font-size 20px
+      absolute  bottom 10px right 0
+
+      @media screen and (max-width: 550px)
+        display none
 
   .content
-    width    800px
-    margin   0 auto
-    position relative
+    max-width 800px
+    margin    0 auto
+    position  relative
 
     .section
       display none
@@ -89,8 +96,9 @@ body
         display block
 
     .heading
+      font-size      20px
       margin         20px 0 10px
-      border-bottom  1px solid body-font-color
+      border-bottom  border-width solid border-color
 
     textarea, input[type="text"]
       display       block
@@ -100,7 +108,7 @@ body
       padding       10px
       margin        10px 0
       border        none
-      border-bottom 1px solid body-font-color
+      border-bottom border-width solid border-color
       outline       none
 
       &:focus
@@ -123,8 +131,8 @@ body
           box-shadow    inherit
 
     .progress
-       height           1px
-       background-color body-font-color
+       height           border-width
+       background-color border-color
        margin-bottom    10px
        overflow         hidden
        position         relative

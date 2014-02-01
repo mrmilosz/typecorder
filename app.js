@@ -19,12 +19,19 @@ var Schema     = mongoose.Schema
 // Stylus -> CSS
 fs.readdir(__dirname + '/styles', function(error, filenames) {
   filenames.forEach(function(filename) {
-    var filenameParts = filename.split('.', 1),
-      fileBasename = filenameParts[0],
-      fileExtension = filenameParts[1];
+    var fileExtensionDelimiterIndex = filename.lastIndexOf('.');
+    if (fileExtensionDelimiterIndex > 0) {
+      var fileBasename = filename.substr(0, fileExtensionDelimiterIndex),
+        fileExtension = filename.substr(fileExtensionDelimiterIndex + 1);
+    }
+    else {
+      var fileBasename = filename,
+        fileExtension = null;
+    }
+
     if (fileExtension === 'styl') {
       var filePath = __dirname + '/styles/' + filename;
-      fs.readFile(filePath, function(error, stylusContent) {
+      fs.readFile(filePath, 'utf8', function(error, stylusContent) {
         stylus(stylusContent)
           .set('filename', filePath)
           .use(nib())
