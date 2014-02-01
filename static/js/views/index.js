@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
         }
-        xhr.open('GET', '/' + id);
+        xhr.open('GET', '/' + id + '.json');
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.send(null);
       }

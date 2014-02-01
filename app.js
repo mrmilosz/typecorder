@@ -5,11 +5,37 @@ var express    = require('express'      )
   , stylus     = require('stylus'       )
   , nib        = require('nib'          )
   , mongoose   = require('mongoose'     )
+  , fs         = require('fs'           )
   ;
 
 var Schema     = mongoose.Schema
   , Negotiator = require('negotiator')
   ;
+
+/* 
+ * Preprocessing
+ */
+
+// Stylus -> CSS
+fs.readdir(__dirname + '/styles', function(error, filenames) {
+  filenames.forEach(function(filename) {
+    var filenameParts = filename.split('.', 1),
+      fileBasename = filenameParts[0],
+      fileExtension = filenameParts[1];
+    if (fileExtension === 'styl') {
+      var filePath = __dirname + '/styles/' + filename;
+      fs.readFile(filePath, function(error, stylusContent) {
+        stylus(stylusContent)
+          .set('filename', filePath)
+          .use(nib())
+          .render(function(error, cssContent) {
+            fs.writeFile(__dirname + '/static/css/' + fileBasename + '.css', cssContent);
+          })
+          ;
+      });
+    }
+  });
+});
 
 /*
  * Database
@@ -35,25 +61,14 @@ app.set('view engine', 'jade');
  */
 
 app.use(express.logger());                                   // Log requests
-
 app.use(express.compress());                                 // Set up all responses to be compressed
-
 app.use(mediaType);                                          // Custom request member: mediaType
-
 app.use(express.json());                                     // Read JSON POST bodies into request.body
 
 app.use(app.router);                                         // First try to match routes
-app.use(stylus.middleware({                                  // Compile styles; about to enter static
-  src: __dirname + '/styles',
-  dest: __dirname,
-  compile: function(string, filePath) {
-    return stylus(string)
-      .set('filename', filePath)
-      .use(nib())
-      ;
-  }
-}));
+
 app.use('/static', express.static(__dirname + '/static'));   // Hit up static
+
 app.use(function(request, response, next) {                  // Finally throw an error
   if (request.mediaType === 'text/html') {
     response.status(404);
@@ -77,7 +92,7 @@ app.use(function(request, response, next) {                  // Finally throw an
  * Express app - routes
  */
 
-app.get('/:key?', function(request, response, next) {
+app.get('/:key?.:format?', function(request, response, next) {
   if (request.mediaType === 'text/html') {
     response.render('index');
   }
@@ -85,22 +100,26 @@ app.get('/:key?', function(request, response, next) {
     var objectId = keyToObjectId(request.param('key'));
     if (objectId) {
       Recording.findById(objectId, function(error, recording) {
-        var payload = {};
         if (error) {
           response.status(500);
-          payload['error'] = error;
+          response.json({
+            error: error
+          });
         }
         else if (!recording) {
           response.status(404);
-          payload['error'] = 'No recording has this ID';
+          response.json({
+            error: 'No recording has this ID'
+          });
         }
         else {
           response.status(200);
-          payload['result'] = {
-            recording: recording
-          };
+          response.json({
+            result: {
+              recording: recording
+            }
+          });
         }
-        response.json(payload);
       });
     }
     else {
@@ -118,18 +137,20 @@ app.get('/:key?', function(request, response, next) {
 app.post('/', function(request, response, next) {
   if (request.mediaType === 'application/json') {
     new Recording(request.body).save(function(error, recording) {
-      var payload = {};
       if (error) {
         response.status(500);
-        payload['error'] = error;
+        response.json({
+          error: error
+        });
       }
       else {
-        response.status(200);
-        payload['result'] = {
-          id: objectIdToKey(recording._id.toString())
-        };
+        resopnse.status(200);
+        response.json({
+          result: {
+            id: objectIdToKey(recording._id.toString())
+          }
+        });
       }
-      response.json(payload);
     });
   }
   else {
