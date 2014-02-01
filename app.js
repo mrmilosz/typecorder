@@ -144,7 +144,7 @@ app.post('/', function(request, response, next) {
         });
       }
       else {
-        resopnse.status(200);
+        response.status(200);
         response.json({
           result: {
             id: objectIdToKey(recording._id.toString())
