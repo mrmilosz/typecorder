@@ -36,7 +36,8 @@ fs.readdir(__dirname + '/styles', function(error, filenames) {
           .set('filename', filePath)
           .use(nib())
           .render(function(error, cssContent) {
-            fs.writeFile(__dirname + '/static/css/' + fileBasename + '.css', cssContent);
+            fs.writeFile(__dirname + '/static/css/' + fileBasename + '.css', cssContent, function(error) {
+            });
           })
           ;
       });
